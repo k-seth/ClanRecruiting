@@ -1,0 +1,21 @@
+{
+  "name": "ClanRecruiting",
+  "version": "1.0.0",
+  "description": "WOT recruit tracker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/k-seth/ClanRecruiting.git"
+  },
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "author": "Seth Kuipers",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "javascript-obfuscator": "^0.14.3",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^1.19.1"
+  }
+}
