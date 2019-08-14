@@ -1,18 +1,30 @@
 # ClanRecruiting
 Author: Seth Kuipers  
   
-Enables the ability to check for players that have left their clan in World of Tanks (Public)  
-To run the node server, follow these steps:  
+Enables the ability to check for players that have left their clan in World of Tanks (Public) 
+  
+### Prerequisites  
+
+For this program to function properly you will need some additional items.  
+1. Node.js installed on your system (https://nodejs.org/en/)
+2. An application_id from Wargaming's developer portal here: https://developers.wargaming.net/applications/  
+   * This is specific to your account and should not be shared  
+3. Rename "config_template.json" to "config.json"  
+4. In said file, change the value of "application_id" to your id. Quotations are required around your id
+   * Here you may also set which server you wish. "na" is default (as is the list of clans), however, "eu", "ru", and "asia" can be used (In progress)
+   * If you are using a server other than "na" you can find the a Clan's ID through the Wargaming developer Portal "API Reference" section  
+  
+### Using Node.js  
+  
+To run the node server which does the bulk of the work, follow these steps:  
 1. Using Powershell (Windows) or terminal (Unix), navigate to the ClanRecruiting directory  
 2. Run "npm install"  
-3. Type "npm run dev [port]"  
+3. Type "npm run dev [port]"
+   * An example of [port] may be 3030  
 4. Go to "localhost:[port]"  
   
-To configure the environment:  
-1. Rename "config_template.json" to "config.json"  
-2. In said file, change the value of "application_id" to your id. Quotations are required around your id  
   
-Note: All program output is currently sent to the browser console (Ctrl+Shift+I > Console for chrome). This will be changed in the future.  
+Note: All program output is currently sent to the browser console (Ctrl+Shift+I > Console for chrome). This will (likely) be changed in the future.  
   
 Default list of clans that are checked (Subject to name changes):  
 <pre>  

@@ -23,12 +23,8 @@ $(document).ready(function() {
             dataType:"text",
             data: {check:"true"},
           
-            success: function(msg) {
-                console.log(JSON.parse(msg).success);
-                display();
-            }, error: function(msg) {
-                console.log(JSON.parse(msg).error);
-            }
+            success: function(msg) { console.log(JSON.parse(msg).success); display(); },
+            error: function(msg) { console.log(JSON.parse(msg).error); }
         });
     });
 
@@ -40,18 +36,13 @@ $(document).ready(function() {
             dataType:"text",
             data: {check:"false"},
           
-            success: function(msg) {
-                console.log(JSON.parse(msg).success);
-            }, error: function(msg) {
-                console.log(JSON.parse(msg).error);
-            }
+            success: function(msg) { console.log(JSON.parse(msg).success); }, 
+            error: function(msg) { console.log(JSON.parse(msg).error); }
         });
     });
     
     // Debug only. Program should be used via the runCheck callback
-    // $("#display").click(function(e) {
-        // display();
-    // });
+    $("#display").click(function(e) { display(); });
 });
 
 function display() {
@@ -60,11 +51,12 @@ function display() {
         type:"GET",
         dataType:"text",
                                           
-        success: function(msg) {
-            let obj = JSON.parse(msg); // TODO: if it returns with a 204 this will throw an error in console
-            for (var key in obj) { console.log(key + " left " + obj[key]); }
-        }, error: function(msg) {
-            console.log(JSON.parse(msg).error);
-        }
+        success: function(msg, status, xhr) {
+            let obj = JSON.parse(msg);
+            
+            if (obj.success) { console.log(obj.success); }
+            else { for (var key in obj) { console.log(key + " left " + obj[key]); } }
+        },
+		error: function(msg) { console.log(JSON.parse(msg).error); }
     });
 }
