@@ -25,10 +25,10 @@ $(document).ready(function() {
           
             success: function(msg) {
                 console.log(JSON.parse(msg).success);
-				display();
+                display();
             }, error: function(msg) {
-				console.log(JSON.parse(msg).error);
-			}
+                console.log(JSON.parse(msg).error);
+            }
         });
     });
 
@@ -43,28 +43,28 @@ $(document).ready(function() {
             success: function(msg) {
                 console.log(JSON.parse(msg).success);
             }, error: function(msg) {
-				console.log(JSON.parse(msg).error);
-			}
+                console.log(JSON.parse(msg).error);
+            }
         });
     });
-	
-	// Debug only. Program should be used via the runCheck callback
-	// $("#display").click(function(e) {
-		// display();
-	// });
+    
+    // Debug only. Program should be used via the runCheck callback
+    // $("#display").click(function(e) {
+        // display();
+    // });
 });
 
 function display() {
-	$.ajax({
-		url:"/display",
-		type:"GET",
-		dataType:"text",
-										  
-		success: function(msg) {
-			let obj = JSON.parse(msg); // TODO: if it returns with a 204 this will throw an error in console
-			for (var key in obj) { console.log(key + " left " + obj[key]); }
-		}, error: function(msg) {
-			console.log(JSON.parse(msg).error);
-		}
-	});
+    $.ajax({
+        url:"/display",
+        type:"GET",
+        dataType:"text",
+                                          
+        success: function(msg) {
+            let obj = JSON.parse(msg); // TODO: if it returns with a 204 this will throw an error in console
+            for (var key in obj) { console.log(key + " left " + obj[key]); }
+        }, error: function(msg) {
+            console.log(JSON.parse(msg).error);
+        }
+    });
 }

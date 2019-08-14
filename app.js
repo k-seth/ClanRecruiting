@@ -52,7 +52,7 @@ app.get("/pullData", function(req, res) {
 
     // Construct the string of the clan_ids to be requested from WG API
     // Done in one shot to ensure the Req/Sec is not exceeded
-	for (i = 0; i < numClans; i++) { input = input + clanList[i] + "%2C"; }
+    for (i = 0; i < numClans; i++) { input = input + clanList[i] + "%2C"; }
 
     // Using node-fetch, retrieve the data needed and run the check
     // Everything is done in the here because fetches are handled async, so it was just easier(TM)
@@ -61,15 +61,15 @@ app.get("/pullData", function(req, res) {
         .then(json => {
             if (req.query.check == "true") {
                 runCheck(json);
-				res.status(200).json({success : "Comparing data"});
-				return;
+                res.status(200).json({success : "Comparing data"});
+                return;
             } else {
                 seedData(json);
-				res.status(200).json({success : "New starting data has been pulled"});
-				return;
+                res.status(200).json({success : "New starting data has been pulled"});
+                return;
             }
         })
-		.catch(function() { res.status(400).json({error : "An unexpected error occured during an api call. Try again later"}); return; });
+        .catch(function() { res.status(400).json({error : "An unexpected error occured during an api call. Try again later"}); return; });
 });
 
 app.get("/display", function(req, res) {
@@ -83,37 +83,37 @@ app.get("/display", function(req, res) {
         // Construct the string of the account_id's to convert to player names for readable output
         // Done in one shot to ensure the Req/Sec is not exceeded
         fs.readFileSync(historical + "left_players.txt", "utf-8").trim().split(",").forEach(element => {
-			if (element.trim() != "") { // A blank file or eof
-				let splitLine = element.trim().split("_");
-				players = players + splitLine[0] + "%2C";
-				
-				playerId.push(splitLine[0]);
-				oldClans.push(splitLine[1]);
-			}
+            if (element.trim() != "") { // A blank file or eof
+                let splitLine = element.trim().split("_");
+                players = players + splitLine[0] + "%2C";
+                
+                playerId.push(splitLine[0]);
+                oldClans.push(splitLine[1]);
+            }
         });
-		
-		if (playerId.length < 1) { res.status(204).send("No players have left since last update"); return; }
-		
+        
+        if (playerId.length < 1) { res.status(204).send("No players have left since last update"); return; }
+        
         // Using node-fetch, retrieve the data needed and run the check
         fetch("https://api.worldoftanks.com/wot/account/info/?application_id=" + appConfig.application_id  + "&account_id=" + players + "&fields=nickname%2C+account_id")
             .then(res => res.json())
             .then(json => {
-				let numPlayers = playerId.length;
-				
-				// Assemble a JSON object of all the players that have left
-				var playerList = "{";
-				
-				for (i = 0; i < numPlayers; i++) {
-					playerList = playerList + "\"" + (json.data)[(playerId[i]).trim()].nickname + "\"" + " : " + "\"" + oldClans[i] + "\"";
-					if (i != numPlayers - 1) { playerList = playerList + ", "; }
-				}
-				
-				playerList = playerList + "}";
-				
-				res.status(200).send(playerList);
-				return;
+                let numPlayers = playerId.length;
+                
+                // Assemble a JSON object of all the players that have left
+                var playerList = "{";
+                
+                for (i = 0; i < numPlayers; i++) {
+                    playerList = playerList + "\"" + (json.data)[(playerId[i]).trim()].nickname + "\"" + " : " + "\"" + oldClans[i] + "\"";
+                    if (i != numPlayers - 1) { playerList = playerList + ", "; }
+                }
+                
+                playerList = playerList + "}";
+                
+                res.status(200).send(playerList);
+                return;
             })
-			.catch(function() { res.status(400).json({error : "An unexpected error occured during an api call. Try again later"}); return; });
+            .catch(function() { res.status(400).json({error : "An unexpected error occured during an api call. Try again later"}); return; });
 });
 
 // Using the new player data run a check to see all players that have left their respective clans
@@ -128,34 +128,34 @@ function runCheck(fetched) {
             });
         }
     });
-	
-	for (i = 0; i < numClans; i++) {
-		let playerList = "";
+    
+    for (i = 0; i < numClans; i++) {
+        let playerList = "";
 
         (((fetched.data)[clanList[i]]).members).forEach(player => {
-			playerList = playerList + player.account_id + "\n";
-				
-			historicalData.splice(historicalData.indexOf(player.account_id + "_" + ((fetched.data)[clanList[i]]).tag), 1);
+            playerList = playerList + player.account_id + "\n";
+                
+            historicalData.splice(historicalData.indexOf(player.account_id + "_" + ((fetched.data)[clanList[i]]).tag), 1);
         });
-		
+        
         // Write the player list to the file. This is the new historical data
         fs.writeFile(historical + ((fetched.data)[clanList[i]]).tag + ".txt", playerList, (err) => {
             if (err) { throw err; }
         });
-	}
-	
-	// Write the remaining players to the left file
-	fs.writeFile(historical + "left_players.txt", historicalData, (err) => {
-		if (err) { throw err; }
-	});
-	
+    }
+    
+    // Write the remaining players to the left file
+    fs.writeFile(historical + "left_players.txt", historicalData, (err) => {
+        if (err) { throw err; }
+    });
+    
     return;
 }
 
 // Seed new files into the "historical" directory in the event it is empty
 function seedData(fetched) {
-	for (i = 0; i < numClans; i++) {
-		let playerList = "";
+    for (i = 0; i < numClans; i++) {
+        let playerList = "";
 
         (((fetched.data)[clanList[i]]).members).forEach(player => {
             playerList = playerList + player.account_id + "\n";
@@ -165,7 +165,7 @@ function seedData(fetched) {
         fs.writeFile(historical + ((fetched.data)[clanList[i]]).tag + ".txt", playerList, (err) => {
             if (err) { throw err; }
         });
-	}
+    }
 
     return;
 }
