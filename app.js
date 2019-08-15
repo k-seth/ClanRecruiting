@@ -33,6 +33,7 @@ const config = require("./config.json");
 const appConfig = config.app;
 const clanList = config.clanlist;
 const numClans = clanList.length;
+const server = determineURL(appConfig.server);
 
 // Serve the html file
 app.get("/",function(req,res){ res.sendFile(path.join(__dirname+"/index.html")); });
@@ -56,12 +57,12 @@ app.get("/pullData", function(req, res) {
 
     // Using node-fetch, retrieve the data needed and run the check
     // Everything is done in the here because fetches are handled async, so it was just easier(TM)
-    fetch("https://api.worldoftanks.com/wot/clans/info/?application_id=" + appConfig.application_id + "&clan_id=" + input + "&fields=members.account_id%2Ctag")
+    fetch("https://api.worldoftanks" + server + "/wot/clans/info/?application_id=" + appConfig.application_id + "&clan_id=" + input + "&fields=members.account_id%2Ctag")
         .then(res => res.json())
         .then(json => {
             if (req.query.check == "true") {
                 runCheck(json);
-                res.status(200).json({success : "Comparing data"});
+                res.status(200).json({success : "New comparison data pulled"});
                 return;
             } else {
                 seedData(json);
@@ -95,7 +96,7 @@ app.get("/display", function(req, res) {
     if (playerId.length < 1) { res.status(200).json({success : "No players have left any tracked clans"}) ; return; }
     
     // Using node-fetch, retrieve the data needed and run the check
-    fetch("https://api.worldoftanks.com/wot/account/info/?application_id=" + appConfig.application_id  + "&account_id=" + players + "&fields=nickname%2C+account_id")
+    fetch("https://api.worldoftanks" + server + "/wot/account/info/?application_id=" + appConfig.application_id  + "&account_id=" + players + "&fields=nickname%2C+account_id")
         .then(res => res.json())
         .then(json => {
             let numPlayers = playerId.length;
@@ -162,4 +163,20 @@ function seedData(fetched) {
     return;
 }
 
+// Helper function for assigning the correct TLD for the various regions
+function determineURL(region) {
+    switch(region.toLowerCase()) {
+        case "na":
+            return ".com";
+        case "eu":
+            return ".eu";
+        case "ru":
+            return ".ru";
+        case "asia":
+            return ".asia"
+        default:
+            throw "Invalid region - please read the README for valid servers";
+            return;
+    }
+}
 app.listen(portNum);

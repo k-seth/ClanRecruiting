@@ -42,7 +42,7 @@ $(document).ready(function() {
     });
     
     // Debug only. Program should be used via the runCheck callback
-    $("#display").click(function(e) { display(); });
+    // $("#display").click(function(e) { display(); });
 });
 
 function display() {
@@ -57,6 +57,6 @@ function display() {
             if (obj.success) { console.log(obj.success); }
             else { for (var key in obj) { console.log(key + " left " + obj[key]); } }
         },
-		error: function(msg) { console.log(JSON.parse(msg).error); }
+        error: function(msg) { console.log(JSON.parse(msg).error); }
     });
 }
