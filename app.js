@@ -85,7 +85,7 @@ app.get("/display", function(req, res) {
     // Done in one shot to ensure the Req/Sec is not exceeded
     fs.readFileSync(historical + "left_players.txt", "utf-8").trim().split(",").forEach(element => {
         if (element.trim() != "") { // A blank file or eof
-            let splitLine = element.trim().split("_");
+            let splitLine = element.trim().split(".");
             players = players + splitLine[0] + "%2C";
             
             playerId.push(splitLine[0]);
@@ -125,7 +125,7 @@ function runCheck(fetched) {
     fs.readdirSync(historical).forEach(file => {
         if (file != "README.md" && file != "left_players.txt") { 
             fs.readFileSync(historical + file, "utf-8").trim().split("\n").forEach(line => { 
-            historicalData.push(line + "_" + file.split(".")[0]); });
+            historicalData.push(line + "." + file.split(".")[0]); });
         }
     });
     
@@ -135,7 +135,7 @@ function runCheck(fetched) {
         (((fetched.data)[clanList[i]]).members).forEach(player => {
             playerList = playerList + player.account_id + "\n";
             
-            let index = historicalData.indexOf(player.account_id + "_" + ((fetched.data)[clanList[i]]).tag);
+            let index = historicalData.indexOf(player.account_id + "." + ((fetched.data)[clanList[i]]).tag);
             if (index != -1) { historicalData.splice(index, 1); }
         });
         
