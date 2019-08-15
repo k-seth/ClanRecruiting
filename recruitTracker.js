@@ -42,7 +42,7 @@ $(document).ready(function() {
     });
     
     // Debug only. Program should be used via the runCheck callback
-    $("#display").click(function(e) { display(); });
+    // $("#display").click(function(e) { display(); });
 });
 
 function display() {
