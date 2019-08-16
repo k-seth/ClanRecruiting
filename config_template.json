@@ -3,6 +3,15 @@
         "application_id": "Your App ID",
         "server": "na"
     },
+    "bot": {
+        "token": "Your bot token",
+        "seed": "!new",
+        "command": [
+            "!recruit",
+            "!check",
+            "!left"
+        ]
+    },
     "clanlist": [
         1000016749,
         1000008386,
