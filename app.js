@@ -17,23 +17,17 @@
 // Modules required by the program
 const config = require("./config.json");
 const Discord = require('discord.io');
-const express = require("express");
 const fetch = require("node-fetch");
 const fs = require("fs");
-const JavaScriptObfuscator = require("javascript-obfuscator");
-const path = require("path");
-const readline = require("readline");
 
 // Path constants
 const historical = "./historical/";
 
 // Config constants
-const app = express();
-const appConfig = config.app;
 const clanList = config.clanlist;
 const command = (config.bot).command;
 const seed = (config.bot).seed;
-const server = determineURL(appConfig.server);
+const urlStarter = "https://api.worldoftanks" + determineURL((config.app).server);
 
 // Other constants
 const bot = new Discord.Client({ token: (config.bot).token, autorun: true });
@@ -102,15 +96,15 @@ async function constructNameList() {
         
     if (playerId.length < 1) { return "No players have left any tracked clans"; }
     
-    let json = await getNames(playerIds); // Force the function to await on the async fetch call
-    
+    let json = await callApi(urlStarter + "/wot/account/info/?application_id=" + (config.app).application_id + "&account_id=" + playerIds + "&fields=nickname%2C+account_id"); // Force the function to await on the async fetch call
+
     let numPlayers = playerId.length;
 
     // Assemble a string of all players that have left
     var playerList = "";
     for (i = 0; i < numPlayers; i++) { playerList = playerList + (json.data)[(playerId[i]).trim()].nickname + " left " + oldClans[i] + "\n"; }
-        
-    return playerList;
+
+    return playerList.replace(/_/g, "\\\_"); // Find and replace all underscores. Add an escape character, but make sure to escape it!
 }
 
 // An async function which will assemble a string of all the clans and request an API call
@@ -122,7 +116,7 @@ async function pullRosters(check) {
     // Done in one shot to ensure the Req/Sec is not exceeded
     for (i = 0; i < numClans; i++) { clansToCheck = clansToCheck + clanList[i] + "%2C"; }
         
-    let json = await getIds(clansToCheck);
+    let json = await callApi(urlStarter + "/wot/clans/info/?application_id=" + appConfig.application_id + "&clan_id=" + clansToCheck + "&fields=members.account_id%2Ctag");
 
     if (check) { checkClanRosters(json); return; }
     else { // Seed New Data
@@ -140,17 +134,9 @@ async function pullRosters(check) {
 // API CALL FUNCTIONS
 
 // An async function which retrieves the clan rosters of all clans defined in the config.json file
-async function getIds(clansToCheck) {
+async function callApi(url) {
     // Using node-fetch, retrieve the data needed and run the check
-    return await fetch("https://api.worldoftanks" + server + "/wot/clans/info/?application_id=" + appConfig.application_id + "&clan_id=" + clansToCheck + "&fields=members.account_id%2Ctag")
-        .then(res => res.json())
-        .catch(err => { return "An unexpected error occured during an api call. Try again later"; });
-}
-
-// An async function that fetches and returns the names of all the players that have left the clans since last check
-async function getNames(playerIds) {
-    // Using node-fetch, retrieve the data needed and run the check
-    return await fetch("https://api.worldoftanks" + server + "/wot/account/info/?application_id=" + appConfig.application_id  + "&account_id=" + playerIds + "&fields=nickname%2C+account_id")
+    return await fetch(url)
         .then(res => res.json())
         .catch(err => { return "An unexpected error occured during an api call. Try again later"; });
 }
