@@ -1,8 +1,9 @@
 # ClanRecruiting
 Author: Seth Kuipers  
   
-Enables the ability to check for players that have left their clan in World of Tanks (Public) 
-  
+Enables the ability to check for players that have left their clan in World of Tanks (Public)
+DEV BRANCH - CODE HERE MAY NOT WORK.
+
 ### Prerequisites  
 
 For this program to function properly you will need some additional items.  
@@ -14,17 +15,27 @@ For this program to function properly you will need some additional items.
    * Here you may also set which server you wish. "na" is default (as is the list of clans), however, "eu", "ru" or "asia" can be used
    * If you are using a server other than "na" you can find the a Clan's ID through the Wargaming developer Portal "API Reference" section  
   
-### Using Node.js  
-  
-To run the node server which does the bulk of the work, follow these steps:  
-1. Using Powershell (Windows) or terminal (Unix), navigate to the ClanRecruiting directory  
+### Running the program
+
+#### Windows
+
+1. Navigate to the ClanRecruitment directory using File Explorer
+2. Double click "run.bat"
+3. Go to "localhost:3030"  
+4. If you have never run the program click "Setup Data"
+   * This will get the current clan rosters from Wargaming.
+5. Every couple of hours, click "Find Players" to run a check and update the data
+
+#### Linux
+ 
+1. Using the terminal, navigate to the ClanRecruiting directory  
 2. Run "npm install"  
-3. Type "npm run dev [port]"
-   * An example of [port] may be 3030  
-4. Go to "localhost:[port]"  
+3. Type "npm run dev 3030" 
+4. Go to "localhost:3030"  
 5. If you have never run the program click "Setup Data"
    * This will get the current clan rosters from Wargaming.
 6. Every couple of hours, click "Find Players" to run a check and update the data
+7. TODO: Create shell script
   
 ### Trouble shooting
   
@@ -48,7 +59,11 @@ Below is a list of issues I have encountered in my testing. If something comes u
 - The terminal will log some output, mainly errors. Most issues will be configuration related. If the server crashes (you can confirm by your webpage will stop loading), type "rs" into the terminal and press enter, or follow the "Using Node.js" instructions above again
 - The node server can be shut down between checks. It only needs to be running to call the API
 - All program output is currently sent to the browser console (Ctrl+Shift+I > Console for chrome). This will (likely) be changed in the future.  
-  
+
+### Know limitations
+
+- Current output format leaves much to be desired. This is understood and will be changed
+
 Default list of clans that are checked (Subject to name changes. All clans are NA clans):  
 <pre>  
 - MAHOU : 1000016749  
