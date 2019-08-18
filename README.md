@@ -11,26 +11,33 @@ For this program to function properly you will need some additional items.
    * This is specific to your account and should not be shared
 3. An app with a bot in your Discord server
    * You can follow these steps if needed: https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/
-4. Rename "config_template.json" to "config.json"  
+4. Rename "config_template.json" to "config.json" - TODO: Add to script?
 5. In said file, change the value of "application_id" to your id. Quotations are required around your id
    * Here you may also set which server you wish. "na" is default (as is the list of clans), however, "eu", "ru" or "asia" can be used
    * If you are using a server other than "na" you can find the a Clan's ID through the Wargaming developer Portal "API Reference" section  
 6. In said file, change the value of "token" to your bot's token. Quotations are required around your token 
  
-### Using Node.js  
+### Using the program  
   
-To run the node server which does the bulk of the work, follow these steps:  
-1. Using Powershell (Windows) or terminal (Unix), navigate to the ClanRecruitment directory  
+#### Windows
+
+1. Navigate to ClanRecruitment
+2. Double click "run.bat"
+3. The bot will now be active in Discord
+
+#### Linux
+
+1. In terminal, navigate to the ClanRecruitment directory  
 2. Run "npm install"  
 3. Type "node app.js"
-4. In Discord, use the commands specified in config.json
-   * NOTE: Unlike the web app version on Master, this server will not auto restart in the event of errors. You will need to manually restart it.
+4. TODO: Make a shell script
   
 ### Trouble shooting
   
 Below is a list of issues I have encountered in my testing. If something comes up that isn't listed, feel free to open an issue so I can look into it. Specific error output and steps to reproduce the issue would be helpful.  
   
-- Error 404: Testing not found (Currently). Good luck.
+- Issue: Terminal says "Error: Cannot find module './config.json'"
+   1. Fix: Rename "config_template.json" to "config.json". Ensure all prerequisites have been done
   
 ###  Other useful notes  
   
@@ -38,9 +45,9 @@ Below is a list of issues I have encountered in my testing. If something comes u
   
 ### Known limitations  
   
-- Due to Discord text formatting, -_W_- becomes -W-. I will look for a code server side solution that isn't hard coded to the specific clan
 - There is typically a short (1-2 seconds) delay between request and response. This is a learning exercise, so it isn't exactly perfectly optimized
 - This was just setup, so testing has not been super rigorous yet. There is likely bugs
+- Despite finding players the bot failed to correctly display them in Discord. Due to me not keeping historical data backups, I am unable to test this at the moment, but I will create a data backup to test this more thoroughly
 
 Default list of clans that are checked (Subject to name changes. All clans are NA clans):  
 <pre>  
