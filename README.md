@@ -1,8 +1,7 @@
 # ClanRecruiting Discord Bot
 Author: Seth Kuipers  
   
-A Discord bot integration for the ClanRecruiting App (Public)  
-DEV BRANCH - CODE HERE MAY NOT WORK. 
+A Discord bot integration for the ClanRecruiting App (Public)
   
 ### Prerequisites  
 
@@ -48,6 +47,7 @@ Below is a list of issues I have encountered in my testing. If something comes u
   
 - There is typically a short (1-2 seconds) delay between request and response. This is a learning exercise, so it isn't exactly perfectly optimized
 - This was just setup, so testing has not been super rigorous yet. There is likely bugs
+- Despite finding players the bot failed to correctly display them in Discord. Due to me not keeping historical data backups, I am unable to test this at the moment, but I will create a data backup to test this more thoroughly
 
 Default list of clans that are checked (Subject to name changes. All clans are NA clans):  
 <pre>  

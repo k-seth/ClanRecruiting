@@ -41,8 +41,8 @@ bot.on('message', async function (user, userID, channelID, message, evt) {
 
 // CORE FUNCTIONS
 
-// A function which uses the information retrieved by pullRosters to check the existing clan rosters to the new roster to find players that have left
-// When it is done it rights the new roster to file and the ids of the players that have left
+// A function which uses the information retrieved by pullRosters to compare the existing clan rosters to the new roster in order to find players that have left
+// When it is done it writes the new roster to file and the ids of the players that have left
 function checkClanRosters(fetched) {
     var historicalData = [];
 
@@ -104,7 +104,9 @@ async function constructNameList() {
     var playerList = "";
     for (i = 0; i < numPlayers; i++) { playerList = playerList + (json.data)[(playerId[i]).trim()].nickname + " left " + oldClans[i] + "\n"; }
 
-    return playerList.replace(/_/g, "\\\_"); // Find and replace all underscores. Add an escape character, but make sure to escape it!
+    let finalList = playerList.replace(/_/g, "\\\_"); // Find and replace all underscores. Add an escape character, but make sure to escape it!
+
+    return finalList; 
 }
 
 // An async function which will assemble a string of all the clans and request an API call
@@ -116,7 +118,7 @@ async function pullRosters(check) {
     // Done in one shot to ensure the Req/Sec is not exceeded
     for (i = 0; i < numClans; i++) { clansToCheck = clansToCheck + clanList[i] + "%2C"; }
         
-    let json = await callApi(urlStarter + "/wot/clans/info/?application_id=" + appConfig.application_id + "&clan_id=" + clansToCheck + "&fields=members.account_id%2Ctag");
+    let json = await callApi(urlStarter + "/wot/clans/info/?application_id=" + (config.app).application_id + "&clan_id=" + clansToCheck + "&fields=members.account_id%2Ctag");
 
     if (check) { checkClanRosters(json); return; }
     else { // Seed New Data
