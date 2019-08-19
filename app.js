@@ -65,11 +65,11 @@ function checkClanRosters(fetched) {
         });
         
         // Write the player list to the file. This is the new historical data
-        fs.writeFile(historical + ((fetched.data)[clanList[i]]).tag + ".txt", playerList, (err) => { if (err) { throw err; } });
+        fs.writeFileSync(historical + ((fetched.data)[clanList[i]]).tag + ".txt", playerList, (err) => { if (err) { throw err; } });
     }
-    
+
     // Write the remaining players to the left file
-    fs.writeFile(historical + "left_players.txt", historicalData, (err) => { if (err) { throw err; } });
+    fs.writeFileSync(historical + "left_players.txt", historicalData, (err) => { if (err) { throw err; } });
     
     return;
 }
@@ -88,14 +88,14 @@ async function constructNameList() {
         if (element.trim() != "") { // A blank file or eof
             let splitLine = element.trim().split(".");
             playerIds = playerIds + splitLine[0] + "%2C";
-            
+
             playerId.push(splitLine[0]);
             oldClans.push(splitLine[1]);
         }
     });
         
     if (playerId.length < 1) { return "No players have left any tracked clans"; }
-    
+
     let json = await callApi(urlStarter + "/wot/account/info/?application_id=" + (config.app).application_id + "&account_id=" + playerIds + "&fields=nickname%2C+account_id"); // Force the function to await on the async fetch call
 
     let numPlayers = playerId.length;
@@ -128,7 +128,7 @@ async function pullRosters(check) {
             (((json.data)[clanList[i]]).members).forEach(player => { playerList = playerList + player.account_id + "\n"; });
 
             // Write the player list to the file. This is the new historical data
-            fs.writeFile(historical + ((json.data)[clanList[i]]).tag + ".txt", playerList, (err) => { if (err) { throw err; } });
+            fs.writeFileSync(historical + ((json.data)[clanList[i]]).tag + ".txt", playerList, (err) => { if (err) { throw err; } });
         }
     }
 }
@@ -158,6 +158,5 @@ function determineURL(region) {
             return ".asia";
         default:
             throw "Invalid region - please read the README for valid servers";
-            return;
     }
 }
