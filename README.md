@@ -11,11 +11,9 @@ For this program to function properly you will need some additional items.
    * This is specific to your account and should not be shared
 3. An app with a bot in your Discord server
    * You can follow these steps if needed: https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/
-4. Rename "config_template.json" to "config.json" - TODO: Add to script?
-5. In said file, change the value of "application_id" to your id. Quotations are required around your id
+4. In config_template.json, change the value of "application_id" to your id, and the value of "token" to your Discord bot token. Quotations are required around both
    * Here you may also set which server you wish. "na" is default (as is the list of clans), however, "eu", "ru" or "asia" can be used
-   * If you are using a server other than "na" you can find the a Clan's ID through the Wargaming developer Portal "API Reference" section  
-6. In said file, change the value of "token" to your bot's token. Quotations are required around your token 
+   * If you are using a server other than "na" you can find the a Clan's ID through the Wargaming developer Portal "API Reference" section
  
 ### Using the program  
   
@@ -27,7 +25,8 @@ For this program to function properly you will need some additional items.
 
 #### Linux
 
-1. In terminal, navigate to the ClanRecruitment directory  
+1. In terminal, navigate to the ClanRecruitment directory
+2. mv config_template.json config.json
 2. Run "npm install"  
 3. Type "node app.js"
 4. TODO: Make a shell script
