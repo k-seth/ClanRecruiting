@@ -9,9 +9,8 @@ DEV BRANCH - CODE HERE MAY NOT WORK.
 For this program to function properly you will need some additional items.  
 1. Node.js installed on your system (https://nodejs.org/en/)
 2. An application_id from Wargaming's developer portal here: https://developers.wargaming.net/applications/  
-   * This is specific to your account and should not be shared  
-3. Rename "config_template.json" to "config.json"  
-4. In said file, change the value of "application_id" to your id. Quotations are required around your id
+   * This is specific to your account and should not be shared 
+3. In config_template.json, change the value of "application_id" to your id. Quotations are required around your id
    * Here you may also set which server you wish. "na" is default (as is the list of clans), however, "eu", "ru" or "asia" can be used
    * If you are using a server other than "na" you can find the a Clan's ID through the Wargaming developer Portal "API Reference" section  
   
@@ -28,14 +27,15 @@ For this program to function properly you will need some additional items.
 
 #### Linux
  
-1. Using the terminal, navigate to the ClanRecruiting directory  
-2. Run "npm install"  
-3. Type "npm run dev 3030" 
-4. Go to "localhost:3030"  
-5. If you have never run the program click "Setup Data"
+1. Using the terminal, navigate to the ClanRecruiting directory
+2. mv config_template.json config.json
+3. Run "npm install"  
+4. Type "npm run dev 3030" 
+5. Go to "localhost:3030"  
+6. If you have never run the program click "Setup Data"
    * This will get the current clan rosters from Wargaming.
-6. Every couple of hours, click "Find Players" to run a check and update the data
-7. TODO: Create shell script
+7. Every couple of hours, click "Find Players" to run a check and update the data
+8. TODO: Create shell script
   
 ### Trouble shooting
   
@@ -45,7 +45,7 @@ Below is a list of issues I have encountered in my testing. If something comes u
    1. Fix: Make sure the server is running by following the "Using Node.js" instructions.
    2. Fix: If there are any errors, try to correct the issue if one of the issues below is helpful
 - Issue: The terminal shows: "Error: Cannot find module './config.json' "
-   1. Fix: Rename "config_template.json" to "config.json". Make sure to double check the following issues.
+   1. Fix: Make sure to follow the steps in "Running the program"
 - Issue: The terminal shows: "Invalid region - please read the README for valid servers"
    1. Fix: An invalid server has been input in "config.json". Enter a valid one ("na", "eu", "ru" or "asia") and save the file. The server will restart automatically
 - Issue: The server is running but nothing happens
