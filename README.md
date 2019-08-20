@@ -2,7 +2,6 @@
 Author: Seth Kuipers  
   
 Enables the ability to check for players that have left their clan in World of Tanks (Public)
-DEV BRANCH - CODE HERE MAY NOT WORK.
 
 ### Prerequisites  
 
@@ -44,12 +43,10 @@ Below is a list of issues I have encountered in my testing. If something comes u
 - Issue: Localhost says: "This site can’t be reached"
    1. Fix: Make sure the server is running by following the "Using Node.js" instructions.
    2. Fix: If there are any errors, try to correct the issue if one of the issues below is helpful
-- Issue: The terminal shows: "Error: Cannot find module './config.json' "
+- Issue: The terminal shows: "Error: Cannot find module './config.json' " (Should not be an issue on Windows)
    1. Fix: Make sure to follow the steps in "Running the program"
 - Issue: The terminal shows: "Invalid region - please read the README for valid servers"
    1. Fix: An invalid server has been input in "config.json". Enter a valid one ("na", "eu", "ru" or "asia") and save the file. The server will restart automatically
-- Issue: The server is running but nothing happens
-   1. Fix: Currently, output is provided using the browser developer console. On Chrome this can be opened with Ctrl+Shift+I. When you have it open, try again. However, you may have to wait a while for a player to leave a clan, so try not to forget this step!
 - Issue: I tried the above and got an error (likely: "Failed to load resource: the server responded with a status of 400 (Bad Request)" and/or "Uncaught SyntaxError: Unexpected token '' in JSON at position #"
    1. Fix: Ensure there is a correct, and valid application_id in "config.json". This is required by Wargaming.
    2. Fix: Ensure ALL clans in the clanlist in "config.json" are from the same server as you specified
@@ -58,11 +55,11 @@ Below is a list of issues I have encountered in my testing. If something comes u
   
 - The terminal will log some output, mainly errors. Most issues will be configuration related. If the server crashes (you can confirm by your webpage will stop loading), type "rs" into the terminal and press enter, or follow the "Using Node.js" instructions above again
 - The node server can be shut down between checks. It only needs to be running to call the API
-- All program output is currently sent to the browser console (Ctrl+Shift+I > Console for chrome). This will (likely) be changed in the future.  
+- All program output is (now!) displayed on the html page, not in console! Hurray! It may be ugly, but it is better. For the time being, I still recommend having the console open (Ctrl+Shift+I) in the event of errors
 
 ### Know limitations
 
-- Current output format leaves much to be desired. This is understood and will be changed
+- Bit of a delay between clicking the button and getting a response, particularly when finding players
 
 Default list of clans that are checked (Subject to name changes. All clans are NA clans):  
 <pre>  
