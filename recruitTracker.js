@@ -23,8 +23,18 @@ $(document).ready(function() {
             dataType:"text",
             data: {check:"true"},
           
-            success: function(msg) { console.log(JSON.parse(msg).success); display(); },
-            error: function(msg) { console.log(JSON.parse(msg).error); }
+            success: function(msg) {
+                $("#resultBlock").html("");
+                let obj = JSON.parse(msg);
+                
+                if (obj.success) { $("#resultBlock").html(obj.success); }
+                else { 
+                    for (var key in obj) { 
+                        $("#resultBlock").append(key + " left " + obj[key] + "</br>");
+                    }   
+                }
+            },
+            error: function(msg) { $("#resultBlock").html(""); alert(JSON.parse(msg).error); }
         });
     });
 
@@ -36,27 +46,14 @@ $(document).ready(function() {
             dataType:"text",
             data: {check:"false"},
           
-            success: function(msg) { console.log(JSON.parse(msg).success); }, 
-            error: function(msg) { console.log(JSON.parse(msg).error); }
+            success: function(msg) {
+                $("#resultBlock").html("");
+                $("#resultBlock").html(JSON.parse(msg).success);
+            },
+            error: function(msg) { $("#resultBlock").html(""); alert(JSON.parse(msg).error); }
         });
     });
     
     // Debug only. Program should be used via the runCheck callback
     // $("#display").click(function(e) { display(); });
 });
-
-function display() {
-    $.ajax({
-        url:"/display",
-        type:"GET",
-        dataType:"text",
-                                          
-        success: function(msg, status, xhr) {
-            let obj = JSON.parse(msg);
-            
-            if (obj.success) { console.log(obj.success); }
-            else { for (var key in obj) { console.log(key + " left " + obj[key]); } }
-        },
-        error: function(msg) { console.log(JSON.parse(msg).error); }
-    });
-}
