@@ -17,7 +17,7 @@ For this program to function properly you will need some additional items.
 
 #### Windows
 
-1. Navigate to the ClanRecruitment directory using File Explorer
+1. Navigate to the ClanRecruitment folder using the File Explorer
 2. Double click "run.bat"
 3. Go to "localhost:3030"  
 4. If you have never run the program click "Setup Data"
@@ -27,14 +27,11 @@ For this program to function properly you will need some additional items.
 #### Linux
  
 1. Using the terminal, navigate to the ClanRecruiting directory
-2. mv config_template.json config.json
-3. Run "npm install"  
-4. Type "npm run dev 3030" 
-5. Go to "localhost:3030"  
-6. If you have never run the program click "Setup Data"
+2. Enter "sh run.sh"
+3. Go to "localhost:3030"  
+4. If you have never run the program click "Setup Data"
    * This will get the current clan rosters from Wargaming.
-7. Every couple of hours, click "Find Players" to run a check and update the data
-8. TODO: Create shell script
+5. Every couple of hours, click "Find Players" to run a check and update the data
   
 ### Trouble shooting
   
@@ -43,8 +40,6 @@ Below is a list of issues I have encountered in my testing. If something comes u
 - Issue: Localhost says: "This site can’t be reached"
    1. Fix: Make sure the server is running by following the "Using Node.js" instructions.
    2. Fix: If there are any errors, try to correct the issue if one of the issues below is helpful
-- Issue: The terminal shows: "Error: Cannot find module './config.json' " (Should not be an issue on Windows)
-   1. Fix: Make sure to follow the steps in "Running the program"
 - Issue: The terminal shows: "Invalid region - please read the README for valid servers"
    1. Fix: An invalid server has been input in "config.json". Enter a valid one ("na", "eu", "ru" or "asia") and save the file. The server will restart automatically
 - Issue: I tried the above and got an error (likely: "Failed to load resource: the server responded with a status of 400 (Bad Request)" and/or "Uncaught SyntaxError: Unexpected token '' in JSON at position #"
@@ -54,7 +49,7 @@ Below is a list of issues I have encountered in my testing. If something comes u
 ###  Other useful notes  
   
 - The terminal will log some output, mainly errors. Most issues will be configuration related. If the server crashes (you can confirm by your webpage will stop loading), type "rs" into the terminal and press enter, or follow the "Using Node.js" instructions above again
-- The node server can be shut down between checks. It only needs to be running to call the API
+- The node server can be shut down between checks if you wish. It only needs to be running to call the API
 - All program output is (now!) displayed on the html page, not in console! Hurray! It may be ugly, but it is better. For the time being, I still recommend having the console open (Ctrl+Shift+I) in the event of errors
 
 ### Know limitations
