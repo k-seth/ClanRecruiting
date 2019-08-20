@@ -13,30 +13,27 @@ For this program to function properly you will need some additional items.
    * You can follow these steps if needed: https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/
 4. In config_template.json, change the value of "application_id" to your id, and the value of "token" to your Discord bot token. Quotations are required around both
    * Here you may also set which server you wish. "na" is default (as is the list of clans), however, "eu", "ru" or "asia" can be used
-   * If you are using a server other than "na" you can find the a Clan's ID through the Wargaming developer Portal "API Reference" section
+   * If you are using a server other than "na" you can find a Clan's ID through the Wargaming developer Portal "API Reference" section
  
 ### Using the program  
   
 #### Windows
 
-1. Navigate to ClanRecruitment
+1. Navigate to the ClanRecruitment folder in the File Explorer
 2. Double click "run.bat"
 3. The bot will now be active in Discord
 
 #### Linux
 
 1. In terminal, navigate to the ClanRecruitment directory
-2. mv config_template.json config.json
-2. Run "npm install"  
-3. Type "node app.js"
-4. TODO: Make a shell script
+2. Enter "sh run.sh"
+3. The bot will now be active in Discord
   
 ### Trouble shooting
   
 Below is a list of issues I have encountered in my testing. If something comes up that isn't listed, feel free to open an issue so I can look into it. Specific error output and steps to reproduce the issue would be helpful.  
   
-- Issue: Terminal says "Error: Cannot find module './config.json'"
-   1. Fix: Rename "config_template.json" to "config.json". Ensure all prerequisites have been done
+- In testing
   
 ###  Other useful notes  
   
@@ -46,7 +43,6 @@ Below is a list of issues I have encountered in my testing. If something comes u
   
 - There is typically a short (1-2 seconds) delay between request and response. This is a learning exercise, so it isn't exactly perfectly optimized
 - This was just setup, so testing has not been super rigorous yet. There is likely bugs
-- Despite finding players the bot failed to correctly display them in Discord.  - This should now be fixed. I will continue to monitor it
 
 Default list of clans that are checked (Subject to name changes. All clans are NA clans):  
 <pre>  
