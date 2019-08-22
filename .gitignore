@@ -62,6 +62,7 @@ typings/
 
 # Generated files directory
 historical/*.txt
+historical
 
 # Config file
 config.json

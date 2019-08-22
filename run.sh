@@ -1,7 +1,10 @@
 #!/bin/bash
 
-[ ! -f config.json ] && cp config_template.json config.json
-
+# Setup environment
+[ ! -f ./app/config.json ] && cp config_template.json ./app/config.json
+cd ./app
+mkdir -p ./historical
 npm install
 
-node app.js
+# Run server
+node ./app.js
