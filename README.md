@@ -19,16 +19,16 @@ For this program to function properly you will need some additional items.
 
 1. Navigate to the ClanRecruitment folder using the File Explorer
 2. Double click "run.bat"
-3. Go to "localhost:3030"  
-4. If you have never run the program click "Setup Data"
+   * This will start the server and launch the web page with your default browser
+3. If you have never run the program click "Setup Data"
    * This will get the current clan rosters from Wargaming.
-5. Every couple of hours, click "Find Players" to run a check and update the data
+4. Every couple of hours, click "Find Players" to run a check and update the data
 
 #### Linux
  
 1. Using the terminal, navigate to the ClanRecruiting directory
 2. Enter "sh run.sh"
-3. Go to "localhost:3030"  
+3. Go to "localhost:3030"
 4. If you have never run the program click "Setup Data"
    * This will get the current clan rosters from Wargaming.
 5. Every couple of hours, click "Find Players" to run a check and update the data
@@ -39,7 +39,7 @@ Below is a list of issues I have encountered in my testing. If something comes u
   
 - Issue: Localhost says: "This site can’t be reached"
    1. Fix: Make sure the server is running by following the "Using Node.js" instructions.
-   2. Fix: If there are any errors, try to correct the issue if one of the issues below is helpful
+   2. Fix: Try reloading the web page. The page may have loaded before the server started
 - Issue: The terminal shows: "Invalid region - please read the README for valid servers"
    1. Fix: An invalid server has been input in "config.json". Enter a valid one ("na", "eu", "ru" or "asia") and save the file. The server will restart automatically
 - Issue: I tried the above and got an error (likely: "Failed to load resource: the server responded with a status of 400 (Bad Request)" and/or "Uncaught SyntaxError: Unexpected token '' in JSON at position #"
@@ -48,7 +48,7 @@ Below is a list of issues I have encountered in my testing. If something comes u
   
 ###  Other useful notes  
   
-- The terminal will log some output, mainly errors. Most issues will be configuration related. If the server crashes (you can confirm by your webpage will stop loading), type "rs" into the terminal and press enter, or follow the "Using Node.js" instructions above again
+- The terminal will log some output, mainly errors. Most issues will be configuration related. If the server crashes (you can confirm by your webpage will stop loading), type "rs" into the terminal and press enter, or follow the "Using Node.js" instructions above
 - The node server can be shut down between checks if you wish. It only needs to be running to call the API
 - All program output is (now!) displayed on the html page, not in console! Hurray! It may be ugly, but it is better. For the time being, I still recommend having the console open (Ctrl+Shift+I) in the event of errors
 

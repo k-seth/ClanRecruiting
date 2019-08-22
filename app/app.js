@@ -37,7 +37,7 @@ const urlStarter = "https://api.worldoftanks" + determineURL((config.app).server
 app.get("/",function(req,res){ res.sendFile(path.join(__dirname+"/index.html")); });
 
 // Serve the supporting JS file. Obfuscate
-app.get("/recruitTracker.js",function(req,res){
+app.get("/recruitTracker.js", function(req,res){
     fs.readFile(path.join(__dirname+"/recruitTracker.js"), "utf8", function(err, contents) {
         const minimizedContents = JavaScriptObfuscator.obfuscate(contents, {compact: true, controlFlowFlattening: true});
         res.contentType("application/javascript");
@@ -85,7 +85,7 @@ function checkClanRosters(fetched) {
 
     // Load the historical data from files and add them to an array
     fs.readdirSync(historical).forEach(file => {
-        if (file != "README.md" && file != "left_players.txt") { 
+        if (file != "left_players.txt") { 
             fs.readFileSync(historical + file, "utf-8").trim().split("\n").forEach(line => { 
             historicalData.push(line + "." + file.split(".")[0]); });
         }
