@@ -26,11 +26,13 @@ const historical = "./historical/";
 // Config constants
 const clanList = config.clanlist;
 const command = (config.bot).command;
+const inactive = determineValidTime((config.app).inactive_weeks);
 const seed = (config.bot).seed;
 const urlStarter = "https://api.worldoftanks" + determineURL((config.app).server);
 
 // Other constants
 const bot = new Discord.Client({ token: (config.bot).token, autorun: true });
+const epochWeek = 604800;
 const numClans = clanList.length;
 
 bot.on('message', async function (user, userID, channelID, message, evt) {
@@ -96,15 +98,26 @@ async function constructNameList() {
         
     if (playerId.length < 1) { return "No players have left any tracked clans"; }
 
-    let json = await callApi(urlStarter + "/wot/account/info/?application_id=" + (config.app).application_id + "&account_id=" + playerIds + "&fields=nickname%2C+account_id"); // Force the function to await on the async fetch call
+    let json = await callApi(urlStarter + "/wot/account/info/?application_id=" + (config.app).application_id + "&account_id=" + playerIds + "&fields=nickname%2C+account_id%2Clast_battle_time"); // Force the function to await on the async fetch call
 
     let numPlayers = playerId.length;
 
     // Assemble a string of all players that have left
-    var playerList = "";
-    for (i = 0; i < numPlayers; i++) { playerList = playerList + (json.data)[(playerId[i]).trim()].nickname + " left " + oldClans[i] + "\n"; }
+    var activePlayerList = "";
+    var inactivePlayerList = "";
 
-    let finalList = playerList.replace(/_/g, "\\\_"); // Find and replace all underscores. Add an escape character, but make sure to escape it!
+    for (i = 0; i < numPlayers; i++) { 
+        var id = (json.data)[(playerId[i]).trim()];
+
+        // Check for inactive players. Get the current system time, convert to seconds and then do the calculation
+        if(((new Date).getTime()/1000) - id.last_battle_time >= epochWeek * inactive) {
+            inactivePlayerList = inactivePlayerList + id.nickname + " left " + oldClans[i] + " (INACTIVE)\n";
+        } else {
+            activePlayerList = activePlayerList + id.nickname + " left " + oldClans[i] + "\n";
+        }
+    }
+
+    let finalList = activePlayerList.replace(/_/g, "\\\_") + inactivePlayerList.replace(/_/g, "\\\_"); // Find and replace all underscores. Add an escape character, but make sure to escape it!
 
     return finalList; 
 }
@@ -159,4 +172,12 @@ function determineURL(region) {
         default:
             throw "Invalid region - please read the README for valid servers";
     }
+}
+
+// Helper function for ensuring the user has given a valid inactive period
+function determineValidTime(time) {
+    if(time < 1) {
+        throw "The number of inactive weeks can not be set lower than 1 week";
+    }
+    return time;
 }

@@ -11,29 +11,48 @@ For this program to function properly you will need some additional items.
    * This is specific to your account and should not be shared
 3. An app with a bot in your Discord server
    * You can follow these steps if needed: https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/
+   * The bot should have read message and send messages permissions
 4. In config_template.json, change the value of "application_id" to your id, and the value of "token" to your Discord bot token. Quotations are required around both
-   * Here you may also set which server you wish. "na" is default (as is the list of clans), however, "eu", "ru" or "asia" can be used
-   * If you are using a server other than "na" you can find a Clan's ID through the Wargaming developer Portal "API Reference" section
  
+### Configurables
+
+This section outlines how to use the config_template.json file to get the most out of the application. REQUIRED fields are ones you must edit, OPTIONAL are if you wish to personalize your app, such as add new clans or change servers
+
+1. "application_id": "Your App ID"
+   * REQUIRED. How you access the Wargaming API
+2. "inactive_weeks": 2
+   * OPTIONAL, default = 2. The number of weeks since last battle before a player is labelled as inactive. Value must be 1 or greater
+3. "server": "na"
+   * OPTIONAL, default = "na". The game server that the data is taken from. Valid values: "na", "ru", "eu", "asia"
+4. "token": "Your bot token"
+   * REQUIRED. How you access your Discord bot
+5. "seed": "!new"
+   * OPTIONAL, default = "!new". The command to get fresh new data for the bot. Typically only used when starting the bot for the first time or historical data has been deleted
+6. "command": [ "commands" ]
+   * OPTIONAL, default = "!recruit", "!check", "!left". The commands to update the information and post it in Discord
+7. "clanlist": [ clan list ]
+   * OPTIONAL, default = see bottom, all NA clans. The list of clans that are checked by the the bot
+
 ### Using the program  
   
 #### Windows
 
-1. Navigate to the ClanRecruitment folder in the File Explorer
+1. Navigate to the ClanRecruiting folder in the File Explorer
 2. Double click "run.bat"
 3. The bot will now be active in Discord
 
 #### Linux
 
-1. In terminal, navigate to the ClanRecruitment directory
+1. In terminal, navigate to the ClanRecruiting directory
 2. Enter "sh run.sh"
 3. The bot will now be active in Discord
-  
+
 ### Trouble shooting
   
 Below is a list of issues I have encountered in my testing. If something comes up that isn't listed, feel free to open an issue so I can look into it. Specific error output and steps to reproduce the issue would be helpful.  
   
-- In testing
+- Issue: I ran the setup script and it does nothing. The bot doesn't start
+   * Fix: Find the config.json file in the app folder, and make sure that you have put your application_id and token in
   
 ###  Other useful notes  
   
@@ -42,9 +61,10 @@ Below is a list of issues I have encountered in my testing. If something comes u
 ### Known limitations  
   
 - There is typically a short (1-2 seconds) delay between request and response. This is a learning exercise, so it isn't exactly perfectly optimized
-- This was just setup, so testing has not been super rigorous yet. There is likely bugs
+- Removing clans from the config file but not removing their historical ".txt" file will result in the whole clan being posted. Every. Single. Time. This will be fixed at some point
+- Testing has not been super rigorous yet. There is likely bugs
 
-Default list of clans that are checked (Subject to name changes. All clans are NA clans):  
+Default list of clans that are checked (Subject to name changes):  
 <pre>  
 - MAHOU : 1000016749  
 - OTTER : 1000008386  
