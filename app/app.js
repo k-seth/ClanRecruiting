@@ -28,7 +28,8 @@ const clanList = config.clanlist;
 const command = (config.bot).command;
 const inactive = determineValidTime((config.app).inactive_weeks);
 const seed = (config.bot).seed;
-const urlStarter = "https://api.worldoftanks" + determineURL((config.app).server);
+const urlStarter = "https://api.worldoftanks" + determineApiUrl((config.app).server);
+const wotlabs = "https://wotlabs.net/" + determineWotlabsRegion((config.app).server) + "/player/";
 
 // Other constants
 const bot = new Discord.Client({ token: (config.bot).token, autorun: true });
@@ -113,7 +114,7 @@ async function constructNameList() {
         if(((new Date).getTime()/1000) - id.last_battle_time >= epochWeek * inactive) {
             inactivePlayerList = inactivePlayerList + id.nickname + " left " + oldClans[i] + " (INACTIVE)\n";
         } else {
-            activePlayerList = activePlayerList + id.nickname + " left " + oldClans[i] + "\n";
+            activePlayerList = activePlayerList + id.nickname + " left " + oldClans[i] + "\n<" + wotlabs + id.nickname + ">\n"; // Add the wotlabs url
         }
     }
 
@@ -159,7 +160,7 @@ async function callApi(url) {
 // HELPER FUNCTIONS
 
 // Helper function for assigning the correct TLD for the various regions
-function determineURL(region) {
+function determineApiUrl(region) {
     switch(region.toLowerCase()) {
         case "na":
             return ".com";
@@ -169,6 +170,21 @@ function determineURL(region) {
             return ".ru";
         case "asia":
             return ".asia";
+        default:
+            throw "Invalid region - please read the README for valid servers";
+    }
+}
+
+function determineWotlabsRegion(region) {
+    switch(region.toLowerCase()) {
+        case "na":
+            return "na";
+        case "eu":
+            return "eu";
+        case "ru":
+            return "ru";
+        case "asia":
+            return "sea";
         default:
             throw "Invalid region - please read the README for valid servers";
     }

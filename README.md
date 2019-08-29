@@ -61,7 +61,8 @@ Below is a list of issues I have encountered in my testing. If something comes u
 ### Known limitations  
   
 - There is typically a short (1-2 seconds) delay between request and response. This is a learning exercise, so it isn't exactly perfectly optimized
-- Removing clans from the config file but not removing their historical ".txt" file will result in the whole clan being posted. Every. Single. Time. This will be fixed at some point
+- Removing clans from the config file but not removing their historical ".txt" file will result in the whole clan being posted. Every. Single. Time. This will be fixed at some point by adding some kind of cleaning check
+- With the addition of wotlabs urls, the bot now becomes subject to the risk of hitting the Discord message limit (2000 characters). At an average of 100 characters per player, only 20 can be given at once. It may be possible to split active and inactive players into different messages however to give a maximum of 40 (although it still will be lopsided)
 - Testing has not been super rigorous yet. There is likely bugs
 
 Default list of clans that are checked (Subject to name changes):  
