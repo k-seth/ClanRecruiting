@@ -28,10 +28,10 @@ $(document).ready(function() {
                 let obj = JSON.parse(msg);
                 
                 if (obj.success) { $("#resultBlock").html(obj.success); }
-                else { 
-                    for (var key in obj) { 
+                else {
+                    for (var key in obj) {
                         $("#resultBlock").append(key + " left " + obj[key] + "</br>");
-                    }   
+                    }  
                 }
             },
             error: function(msg) { $("#resultBlock").html(""); alert(JSON.parse(msg).error); }
@@ -53,7 +53,4 @@ $(document).ready(function() {
             error: function(msg) { $("#resultBlock").html(""); alert(JSON.parse(msg).error); }
         });
     });
-    
-    // Debug only. Program should be used via the runCheck callback
-    // $("#display").click(function(e) { display(); });
 });

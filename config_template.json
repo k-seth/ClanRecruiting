@@ -1,6 +1,7 @@
 {
     "app": {
         "application_id": "Your App ID",
+        "inactive_weeks": 2,
         "server": "na"
     },
     "clanlist": [

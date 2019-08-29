@@ -27,11 +27,16 @@ const path = require("path");
 // Path constants
 const historical = "./historical/";
 
-// Other constants
+// Config constants
 const config = require("./config.json");
+const inactive = determineValidTime((config.app).inactive_weeks);
+const urlStarter = "https://api.worldoftanks" + determineApiUrl((config.app).server);
+const wotlabs = "https://wotlabs.net/" + determineWotlabsRegion((config.app).server) + "/player/";
+
+// Other constants
 const clanList = config.clanlist;
+const epochWeek = 604800;
 const numClans = clanList.length;
-const urlStarter = "https://api.worldoftanks" + determineURL((config.app).server);
 
 // Serve the html file
 app.get("/",function(req,res){ res.sendFile(path.join(__dirname+"/index.html")); });
@@ -134,7 +139,7 @@ async function constructNameList() {
 
     if (playerId.length < 1) { return "{ \"success\" : \"No players have left any tracked clans\" }" ; return; }
 
-    let json = await callApi(urlStarter + "/wot/account/info/?application_id=" + (config.app).application_id  + "&account_id=" + playerIds + "&fields=nickname%2C+account_id");
+    let json = await callApi(urlStarter + "/wot/account/info/?application_id=" + (config.app).application_id  + "&account_id=" + playerIds + "&fields=nickname%2C+account_id%2Clast_battle_time");
 
     let numPlayers = playerId.length;
             
@@ -142,7 +147,14 @@ async function constructNameList() {
     var playerList = "{";
     
     for (i = 0; i < numPlayers; i++) {
-        playerList = playerList + "\"" + (json.data)[(playerId[i]).trim()].nickname + "\"" + " : " + "\"" + oldClans[i] + "\"";
+        var id = (json.data)[(playerId[i]).trim()];
+
+        // Check for inactive players. Get the current system time, convert to seconds and then do the calculation
+        if(((new Date).getTime()/1000) - id.last_battle_time >= epochWeek * inactive) {
+            playerList = playerList + "\"" + id.nickname + "\"" + " : " + "\"" + oldClans[i] + " - (INACTIVE)"+ "\"";
+        } else {
+            playerList = playerList + "\"" + "<a href=" + wotlabs + id.nickname + ">" + id.nickname + "</a>" + "\"" + " : " + "\"" + oldClans[i] + "\"";
+        }
         if (i != numPlayers - 1) { playerList = playerList + ", "; }
     }
     
@@ -164,7 +176,7 @@ async function callApi(url) {
 // HELPER FUNCTIONS
 
 // Helper function for assigning the correct TLD for the various regions
-function determineURL(region) {
+function determineApiUrl(region) {
     switch(region.toLowerCase()) {
         case "na":
             return ".com";
@@ -177,6 +189,29 @@ function determineURL(region) {
         default:
             throw "Invalid region - please read the README for valid servers";
     }
+}
+
+function determineWotlabsRegion(region) {
+    switch(region.toLowerCase()) {
+        case "na":
+            return "na";
+        case "eu":
+            return "eu";
+        case "ru":
+            return "ru";
+        case "asia":
+            return "sea";
+        default:
+            throw "Invalid region - please read the README for valid servers";
+    }
+}
+
+// Helper function for ensuring the user has given a valid inactive period
+function determineValidTime(time) {
+    if(time < 1) {
+        throw "The number of inactive weeks can not be set lower than 1 week";
+    }
+    return time;
 }
 
 app.listen(portNum);
