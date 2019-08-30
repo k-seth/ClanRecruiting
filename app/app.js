@@ -110,15 +110,18 @@ async function constructNameList() {
     for (i = 0; i < numPlayers; i++) { 
         var id = (json.data)[(playerId[i]).trim()];
 
+        let leftPlayer = id.nickname + " left " + oldClans[i];
+        leftPlayer.replace(/_/g, "\\\_"); // Find and replace all underscores. Add an escape character, but make sure to escape it!
+
         // Check for inactive players. Get the current system time, convert to seconds and then do the calculation
         if(((new Date).getTime()/1000) - id.last_battle_time >= epochWeek * inactive) {
-            inactivePlayerList = inactivePlayerList + id.nickname + " left " + oldClans[i] + " (INACTIVE)\n";
+            inactivePlayerList = inactivePlayerList + leftPlayer + " (INACTIVE)\n";
         } else {
-            activePlayerList = activePlayerList + id.nickname + " left " + oldClans[i] + "\n<" + wotlabs + id.nickname + ">\n"; // Add the wotlabs url
+            activePlayerList = activePlayerList + leftPlayer + "\n<" + wotlabs + id.nickname + ">\n";
         }
     }
 
-    let finalList = activePlayerList.replace(/_/g, "\\\_") + inactivePlayerList.replace(/_/g, "\\\_"); // Find and replace all underscores. Add an escape character, but make sure to escape it!
+    let finalList = activePlayerList + inactivePlayerList; // This has the potential to be too long
 
     return finalList; 
 }
