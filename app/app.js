@@ -111,7 +111,7 @@ async function constructNameList() {
         var id = (json.data)[(playerId[i]).trim()];
 
         let leftPlayer = id.nickname + " left " + oldClans[i];
-        leftPlayer.replace(/_/g, "\\\_"); // Find and replace all underscores. Add an escape character, but make sure to escape it!
+        leftPlayer = leftPlayer.replace(/_/g, "\\_"); // Find and replace all underscores. Add an escape character, but make sure to escape it!
 
         // Check for inactive players. Get the current system time, convert to seconds and then do the calculation
         if(((new Date).getTime()/1000) - id.last_battle_time >= epochWeek * inactive) {
